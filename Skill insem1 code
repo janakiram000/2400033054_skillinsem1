@@ -1,0 +1,72 @@
+import React, { useState } from "react";
+
+function FormValidation() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [emailTouched, setEmailTouched] = useState(false);
+  const [passwordTouched, setPasswordTouched] = useState(false);
+
+  // Email validation regex
+  const emailIsValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  const passwordIsValid = password.length >= 6; // example min length
+
+  // Form validity
+  const formIsValid = emailIsValid && passwordIsValid;
+
+  // Handlers
+  const handleEmailChange = (e) => setEmail(e.target.value);
+  const handleEmailBlur = () => setEmailTouched(true);
+
+  const handlePasswordChange = (e) => setPassword(e.target.value);
+  const handlePasswordBlur = () => setPasswordTouched(true);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setEmailTouched(true);
+    setPasswordTouched(true);
+    if (!formIsValid) return;
+    alert("Form submitted!");
+  };
+
+  return (
+    <form onSubmit={handleSubmit} noValidate>
+      <div>
+        <label htmlFor="email">Email:</label><br />
+        <input
+          type="email"
+          id="email"
+          value={email}
+          onChange={handleEmailChange}
+          onBlur={handleEmailBlur}
+          required
+        />
+        {!emailIsValid && emailTouched && (
+          <div style={{ color: "red" }}>Please enter a valid email address.</div>
+        )}
+      </div>
+      <div style={{ marginTop: "8px" }}>
+        <label htmlFor="password">Password:</label><br />
+        <input
+          type="password"
+          id="password"
+          value={password}
+          onChange={handlePasswordChange}
+          onBlur={handlePasswordBlur}
+          required
+        />
+        {password.length > 0 && !passwordIsValid && passwordTouched && (
+          <div style={{ color: "red" }}>
+            Password must be at least 6 characters.
+          </div>
+        )}
+      </div>
+      <div style={{ marginTop: "12px" }}>
+        <button type="submit" disabled={!formIsValid}>
+          Submit
+        </button>
+      </div>
+    </form>
+  );
+}
+
+export default FormValidation;
