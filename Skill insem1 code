@@ -6,14 +6,14 @@ function FormValidation() {
   const [emailTouched, setEmailTouched] = useState(false);
   const [passwordTouched, setPasswordTouched] = useState(false);
 
-  // Email validation regex
+  
   const emailIsValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   const passwordIsValid = password.length >= 6; // example min length
 
-  // Form validity
+  
   const formIsValid = emailIsValid && passwordIsValid;
 
-  // Handlers
+  
   const handleEmailChange = (e) => setEmail(e.target.value);
   const handleEmailBlur = () => setEmailTouched(true);
 
